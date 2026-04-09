@@ -11,3 +11,11 @@ def log(message):
         f.write(f"[{get_timestamp()}] {message}\n")
         
         
+def perform_backup(path, backup_name):
+
+
+def run_service():
+
+
+if __name__ == "__main__":
+    run_service()
