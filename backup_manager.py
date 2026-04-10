@@ -2,6 +2,9 @@ import re
 from datetime import datetime
 import os
 import sys
+import subprocess
+import signal
+
 
 
 def get_timestamp():
@@ -12,6 +15,19 @@ def log(message):
     os.makedirs("logs", exist_ok=True)
     with open("./logs/backup_manager.log", "a") as f:
         f.write(f"[{get_timestamp()}] {message}\n")
+
+def get_pid():
+    result = subprocess.run(
+        ["ps", "-A", "-f"],
+        capture_output=True,
+        text=True
+    )
+    for line in result.stdout.splitlines():
+        if "backup_service.py" in line:
+            pid = int(line.split()[1])  # PID is the 2nd column in ps -f
+            return pid
+    return None
+
 
 
 def create(schedule_text):
@@ -69,13 +85,32 @@ def delete_schedule(index):
         log("Error: can't find backup_schedules.txt")
 
 
-def start(schedule_id=None):
-    log("backup_service started")
+def start():
+        pid = get_pid()
+        if pid == None:
+            try:
+                proc = subprocess.Popen(["python3", "backup_service.py"])
+                log("backup_service started")
+            except FileNotFoundError:
+                log("Error: backup_service already running")
+        else:
+            log("Error: backup_service already running")
+
+    
 
 
-def stop(schedule_id=None):
-    log("backup_service stopped")
 
+def stop():
+    pid = get_pid()
+    if pid != None:
+        try:
+            os.kill(pid, signal.SIGTERM)
+            log("backup_service stopped")
+        except Exception:
+            log("Error: can't stop backup_service")
+    else:
+        log("Error: can't stop backup_service")
+    
 
 def list_backups():
     backups_path = "./backups"

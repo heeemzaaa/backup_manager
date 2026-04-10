@@ -1,2 +1,5 @@
-[10/04/2026 00:17] New schedule added: test;16:07;backup
-[10/04/2026 00:18] Show schedules list
+[10/04/2026 14:55] backup_service started
+[10/04/2026 14:55] Error: backup_service already running
+[10/04/2026 14:55] backup_service stopped
+[10/04/2026 14:55] Error: can't stop backup_service
+[10/04/2026 14:55] backup_service started
