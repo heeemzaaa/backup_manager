@@ -44,7 +44,8 @@ def run_service():
                 time.sleep(45)
                 continue
 
-            now = datetime.now().strftime("%H:%M")
+            now_obj = datetime.now()
+            now_minutes = now_obj.hour * 60 + now_obj.minute
 
             remaining = []
 
@@ -53,13 +54,17 @@ def run_service():
 
                 try:
                     path, schedule_time, backup_name = line.split(";")
+                    hour, minute = map(int, schedule_time.split(":"))
+                    schedule_minutes = hour * 60 + minute
                 except ValueError:
-                    continue
+                    continue 
 
-                if schedule_time == now:
+                if schedule_minutes == now_minutes:
                     perform_backup(path, backup_name)
-                else:
+
+                elif schedule_minutes > now_minutes:
                     remaining.append(line + "\n")
+
 
             with open(schedules_path, "w") as f:
                 f.writelines(remaining)
