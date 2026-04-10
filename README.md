@@ -163,5 +163,5 @@ office_docs.tar
  
 Built by a two-person team as part of a DevOps automation project.
  
-- **Hamza Elkhawlani** — [github.com/heeemzaaa](https://github.com/heeemzaaa)
-- **Hassan El Ouazizi** — [github.com/helouazizi](https://github.com/helouazizi)
+- **Hamza Elkhawlani** — [heeemzaaa](https://github.com/heeemzaaa)
+- **Hassan El Ouazizi** — [helouazizi](https://github.com/helouazizi)
